@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Doctest runner for 'birdhousebuilder.recipe.thredds'.
+Doctest runner for 'birdhousebuilder.recipe.ncwms'.
 """
 __docformat__ = 'restructuredtext'
 
@@ -20,7 +20,7 @@ def setUp(test):
     zc.buildout.testing.buildoutSetUp(test)
 
     # Install the recipe in develop mode
-    zc.buildout.testing.install_develop('birdhousebuilder.recipe.thredds', test)
+    zc.buildout.testing.install_develop('birdhousebuilder.recipe.ncwms', test)
 
     test.globs['os'] = os
     test.globs['sys'] = sys

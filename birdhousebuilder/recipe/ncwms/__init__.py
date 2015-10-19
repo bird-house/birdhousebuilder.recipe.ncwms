@@ -8,60 +8,42 @@ from mako.template import Template
 import zc.buildout
 from birdhousebuilder.recipe import conda, tomcat
 
-wms_config = Template(filename=os.path.join(os.path.dirname(__file__), "wmsConfig.xml"))
+config = Template(filename=os.path.join(os.path.dirname(__file__), "config.properties"))
+wms_config = Template(filename=os.path.join(os.path.dirname(__file__), "config.xml"))
 
 class Recipe(object):
     """This recipe is used by zc.buildout.
-    It installs thredds with conda and setups thredds configuration."""
+    It installs ncWMS2 with conda and setups WMS configuration."""
 
     def __init__(self, buildout, name, options):
         self.buildout, self.name, self.options = buildout, name, options
         b_options = buildout['buildout']
         self.prefix = self.options.get('prefix', conda.prefix())
         self.options['prefix'] = self.prefix
-        self.options['data_root'] = options.get(
+        self.options['config_dir'] = self.options.get(
+            'config_dir', os.path.join(tomcat.content_root(self.prefix), 'ncWMS2'))
+        self.options['data_root'] = self.options.get(
             'data_root', os.path.join(self.prefix, 'var', 'lib', 'pywps', 'outputs'))
-        self.options['organisation'] = options.get('organisation', 'Birdhouse')
-        self.options['website'] = options.get('website', '')
-        self.options['allow_wms'] = options.get('allow_wms', 'true')
-        self.options['allow_wcs'] = options.get('allow_wcs', 'false')
-        self.options['allow_nciso'] = options.get('allow_nciso', 'false')
 
     def install(self):
         installed = []
-        installed += list(self.install_thredds())
-        installed += list(self.install_thredds_config())
-        installed += list(self.install_catalog_config())
+        installed += list(self.install_conda())
+        installed += list(self.install_config())
         installed += list(self.install_wms_config())
         return tuple()
 
-    def install_thredds(self):
+    def install_conda(self):
         script = conda.Recipe(
             self.buildout,
             self.name,
-            {'pkgs': 'thredds'})
+            {'pkgs': 'ncwms2'})
 
         return script.install()
 
-    def install_thredds_config(self):
-        result = thredds_config.render(**self.options)
+    def install_config(self):
+        result = config.render(**self.options)
 
-        output = os.path.join(tomcat.content_root(self.prefix), 'thredds', 'threddsConfig.xml')
-        conda.makedirs(os.path.dirname(output))
-
-        try:
-            os.remove(output)
-        except OSError:
-            pass
-
-        with open(output, 'wt') as fp:
-            fp.write(result)
-        return [output]
-
-    def install_catalog_config(self):
-        result = catalog_config.render(**self.options)
-
-        output = os.path.join(tomcat.content_root(self.prefix), 'thredds', 'catalog.xml')
+        output = os.path.join(tomcat.tomcat_home(self.prefix), 'webapps', 'ncWMS2', 'WEB-INF', 'classes', 'config.properties')
         conda.makedirs(os.path.dirname(output))
 
         try:
@@ -76,7 +58,7 @@ class Recipe(object):
     def install_wms_config(self):
         result = wms_config.render(**self.options)
 
-        output = os.path.join(tomcat.content_root(self.prefix), 'thredds', 'wmsConfig.xml')
+        output = os.path.join(tomcat.content_root(self.prefix), 'ncWMS2', 'config.xml')
         conda.makedirs(os.path.dirname(output))
 
         try:
@@ -89,9 +71,8 @@ class Recipe(object):
         return [output]
 
     def update(self):
-        #self.install_thredds()
-        self.install_thredds_config()
-        self.install_catalog_config()
+        #self.install_conda()
+        self.install_config()
         self.install_wms_config()
         return tuple()
 

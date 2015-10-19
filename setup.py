@@ -24,7 +24,7 @@ entry_points = {"zc.buildout": [
 
 tests_require = ['zope.testing', 'zc.buildout', 'manuel']
 
-setup(name='birdhousebuilder.recipe.thredds',
+setup(name='birdhousebuilder.recipe.ncwms',
       version=version,
       description=description,
       long_description=long_description,

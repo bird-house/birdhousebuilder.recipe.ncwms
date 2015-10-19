@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<config>
+    <cache enabled="true">
+        <inMemorySizeMB>256</inMemorySizeMB>
+        <elementLifetimeMinutes>10.0</elementLifetimeMinutes>
+    </cache>
+    <dynamicServices>
+        <dynamicService alias="outputs" servicePath="${data_root}" datasetIdMatch=".*" dataReaderClass="" copyrightStatement="" moreInfoUrl="" disabled="false" queryable="true" downloadable="false"/>
+    </dynamicServices>
+    <contact>
+        <name>Birdhouse Admin</name>
+        <organization>Birdhouse</organization>
+        <telephone></telephone>
+        <email></email>
+    </contact>
+    <server>
+        <title>ncWMS Server</title>
+        <allowFeatureInfo>true</allowFeatureInfo>
+        <maxImageWidth>1024</maxImageWidth>
+        <maxImageHeight>1024</maxImageHeight>
+        <abstract>birdhouse wms</abstract>
+        <keywords>birdhouse,wms</keywords>
+        <url>http://bird-house.github.io/</url>
+        <allowglobalcapabilities>true</allowglobalcapabilities>
+    </server>
+</config>
