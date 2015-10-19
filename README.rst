@@ -1,6 +1,6 @@
-*******************************
+*****************************
 birdhousebuilder.recipe.ncwms
-*******************************
+*****************************
 
 .. image:: https://travis-ci.org/bird-house/birdhousebuilder.recipe.ncwms.svg?branch=master
    :target: https://travis-ci.org/bird-house/birdhousebuilder.recipe.ncwms
@@ -26,9 +26,9 @@ Usage
 
 The recipe requires that Anaconda is already installed. It assumes that the default Anaconda location is in your home directory ``~/anaconda``. Otherwise you need to set the ``ANACONDA_HOME`` environment variable or the Buildout option ``anaconda-home``.
 
-It installs the ``thredds`` and ``apache-tomcat`` package from a conda channel  in a conda enviroment named ``birdhouse``. The location of the birdhouse environment is ``.conda/envs/birdhouse``. It deploys a `Supervisor`_ configuration for Tomcat in ``~/.conda/envs/birdhouse/etc/supervisor/conf.d/tomcat.conf``. Supervisor can be started with ``~/.conda/envs/birdhouse/etc/init.d/supervisord start``.
+It installs the ``ncWMS2`` and ``apache-tomcat`` package from a conda channel  in a conda enviroment named ``birdhouse``. The location of the birdhouse environment is ``.conda/envs/birdhouse``. It deploys a `Supervisor`_ configuration for Tomcat in ``~/.conda/envs/birdhouse/etc/supervisor/conf.d/tomcat.conf``. Supervisor can be started with ``~/.conda/envs/birdhouse/etc/init.d/supervisord start``.
 
-By default Thredds will be available on http://localhost:8080/thredds.
+By default ``ncWMS2`` will be available on http://localhost:8080/ncWMS2.
 
 The recipe depends on ``birdhousebuilder.recipe.conda``, ``birdhousebuilder.recipe.supervisor`` and ``birdhousebuilder.recipe.tomcat``.
 
@@ -50,37 +50,27 @@ This recipe supports the following options:
    3. ``$HOME/anaconda``
 
 ``data_root``
-  Root Path of data files (NetCDF) for Thredds. Default: ``~/.conda/envs/birdhouse/var/lib/pywps/output``
+  Root Path of data files (NetCDF) for ncWMS2. Default: ``~/.conda/envs/birdhouse/var/lib/pywps/output``
 
-``organisation``
-  The name of your organisation. Default: Birdhouse
+``organization``
+  The name of your organization. Default: Birdhouse
 
-``website``
-  The URL of your organisation. Default: None
-
-``allow_wms``
-  If set to ``true`` Web Mapping Service will be enabled. Default: ``true``.
-
-``allow_wcs``
-  If set to ``true`` Web Coverage Service will be enabled. Default: ``false``.
-
-``allow_nciso``
-  If set to ``true`` ISO generator Service will be enabled. Default: ``false``.
+``url``
+  The URL of your organization. Default: http://bird-house.github.io/
 
 Example usage
 =============
 
-The following example ``buildout.cfg`` installs Thredds with Anaconda and given ``data_root`` directory::
+The following example ``buildout.cfg`` installs ncWMS2 with Anaconda and given ``data_root`` directory::
 
   [buildout]
-  parts = thredds
+  parts = ncwms
 
   anaconda-home = /home/myself/anaconda
 
-  [thredds]
-  recipe = birdhousebuilder.recipe.thredds
-  data_root = /var/lib/thredds/data_root
-  organisation = Birdhouse
-  allow_wms = true
+  [ncwms]
+  recipe = birdhousebuilder.recipe.ncwms
+  organization = Birdhouse
+
 
 

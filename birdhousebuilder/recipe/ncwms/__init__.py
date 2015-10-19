@@ -24,6 +24,8 @@ class Recipe(object):
             'config_dir', os.path.join(tomcat.content_root(self.prefix), 'ncWMS2'))
         self.options['data_root'] = self.options.get(
             'data_root', os.path.join(self.prefix, 'var', 'lib', 'pywps', 'outputs'))
+        self.options['organization'] = self.options.get('organization', 'Birdhouse')
+        self.options['url'] = self.options.get('url', 'http://bird-house.github.io/')
 
     def install(self):
         installed = []
@@ -42,6 +44,9 @@ class Recipe(object):
 
     def install_config(self):
         result = config.render(**self.options)
+
+        # make sure ncWMS2.war is unpacked
+        tomcat.unzip(self.prefix, 'ncWMS2.war')
 
         output = os.path.join(tomcat.tomcat_home(self.prefix), 'webapps', 'ncWMS2', 'WEB-INF', 'classes', 'config.properties')
         conda.makedirs(os.path.dirname(output))

@@ -9,7 +9,7 @@
     </dynamicServices>
     <contact>
         <name>Birdhouse Admin</name>
-        <organization>Birdhouse</organization>
+        <organization>${organization}</organization>
         <telephone></telephone>
         <email></email>
     </contact>
@@ -20,7 +20,7 @@
         <maxImageHeight>1024</maxImageHeight>
         <abstract>birdhouse wms</abstract>
         <keywords>birdhouse,wms</keywords>
-        <url>http://bird-house.github.io/</url>
+        <url>${url}</url>
         <allowglobalcapabilities>true</allowglobalcapabilities>
     </server>
 </config>
