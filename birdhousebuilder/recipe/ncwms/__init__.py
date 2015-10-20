@@ -24,8 +24,16 @@ class Recipe(object):
             'config_dir', os.path.join(tomcat.content_root(self.prefix), 'ncWMS2'))
         self.options['data_root'] = self.options.get(
             'data_root', os.path.join(self.prefix, 'var', 'lib', 'pywps', 'outputs'))
+        self.options['contact'] = self.options.get('contact', 'Birdhouse Admin')
+        self.options['email'] = self.options.get('email', '')
         self.options['organization'] = self.options.get('organization', 'Birdhouse')
+        self.options['title'] = self.options.get('title', 'Birdhouse ncWMS2 Server')
+        self.options['abstract'] = self.options.get('abstract', 'Birdhouse ncWMS2 Server')
+        self.options['keywords'] = self.options.get('keywords', 'birdhouse,ncwms,wms')
         self.options['url'] = self.options.get('url', 'http://bird-house.github.io/')
+        self.options['allowglobalcapabilities'] = self.options.get('allowglobalcapabilities', 'true')
+        self.options['cache'] = self.options.get('cache', 'true')
+        self.options['updateInterval'] = self.options.get('updateInterval', '1')
 
     def install(self):
         installed = []
