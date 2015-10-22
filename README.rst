@@ -11,14 +11,8 @@ birdhousebuilder.recipe.ncwms
 Introduction
 ************
 
-``birdhousebuilder.recipe.ncwms`` is a `Buildout`_ recipe to install and configure `ncWMS`_ server with `Anaconda`_.
-This recipe is used by the `Birdhouse`_ project. 
-
-.. _`Buildout`: http://buildout.org/
-.. _`Anaconda`: http://www.continuum.io/
-.. _`Supervisor`: http://supervisord.org/
-.. _`Tomcat`: https://tomcat.apache.org/
-.. _`Birdhouse`: http://bird-house.github.io/
+``birdhousebuilder.recipe.ncwms`` is a `Buildout < http://buildout.org/>`_ recipe to install and configure `ncWMS <http://reading-escience-centre.github.io/edal-java/ncWMS_user_guide.html>`_ server with `Anaconda <http://www.continuum.io/>`_.
+This recipe is used by the `Birdhouse <http://bird-house.github.io/>`_ project. 
 
 
 Usage
@@ -26,7 +20,7 @@ Usage
 
 The recipe requires that Anaconda is already installed. It assumes that the default Anaconda location is in your home directory ``~/anaconda``. Otherwise you need to set the ``ANACONDA_HOME`` environment variable or the Buildout option ``anaconda-home``.
 
-It installs the ``ncWMS2`` and ``apache-tomcat`` package from a conda channel  in a conda enviroment named ``birdhouse``. The location of the birdhouse environment is ``.conda/envs/birdhouse``. It deploys a `Supervisor`_ configuration for Tomcat in ``~/.conda/envs/birdhouse/etc/supervisor/conf.d/tomcat.conf``. Supervisor can be started with ``~/.conda/envs/birdhouse/etc/init.d/supervisord start``.
+It installs the ``ncWMS2`` and ``apache-tomcat`` package from a conda channel  in a conda enviroment named ``birdhouse``. The location of the birdhouse environment is ``.conda/envs/birdhouse``. It deploys a `Supervisor <http://supervisord.org/>`_ configuration for Tomcat in ``~/.conda/envs/birdhouse/etc/supervisor/conf.d/tomcat.conf``. Supervisor can be started with ``~/.conda/envs/birdhouse/etc/init.d/supervisord start``.
 
 By default ``ncWMS2`` will be available on http://localhost:8080/ncWMS2.
 
@@ -50,7 +44,8 @@ This recipe supports the following options:
    3. ``$HOME/anaconda``
 
 **data_dir**
-  Root Path of data files (NetCDF) for ncWMS2. Default: ``~/.conda/envs/birdhouse/var/lib/pywps/output``
+  Root Path of data files (NetCDF) for ncWMS2 (sed in dynamic service ``outputs``). 
+  Default: ``~/.conda/envs/birdhouse/var/lib/pywps/outputs``
 
 **title**
   Title for this Web Map Service. Default: Birdhouse ncWMS2 Server
@@ -73,7 +68,9 @@ This recipe supports the following options:
 Example usage
 =============
 
-The following example ``buildout.cfg`` installs ncWMS2 with Anaconda and given ``data_root`` directory::
+The following example ``buildout.cfg`` installs ncWMS2 with Anaconda and default options:
+
+..code-block:: ini 
 
   [buildout]
   parts = ncwms
@@ -83,6 +80,10 @@ The following example ``buildout.cfg`` installs ncWMS2 with Anaconda and given `
   [ncwms]
   recipe = birdhousebuilder.recipe.ncwms
   organization = Birdhouse
+
+An example ``GetCapabilities`` URL to access for an output NetCDF file in outputs (using DATASET param)::
+
+   http://localhost:8080/ncWMS2/wms?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0&DATASET=outputs/malleefowl/tasmax.nc
 
 
 

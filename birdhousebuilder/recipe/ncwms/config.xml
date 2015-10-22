@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <config>
-  <datasets>
-    <dataset id="results" title="Results" location="${data_dir}/*/*.nc" queryable="true" downloadable="false" dataReaderClass="" copyrightStatement="" moreInfo="" disabled="false" updateInterval="${updateInterval}">
-    </dataset>
-  </datasets>
   <cache enabled="${enablecache}">
     <inMemorySizeMB>256</inMemorySizeMB>
     <elementLifetimeMinutes>10.0</elementLifetimeMinutes>

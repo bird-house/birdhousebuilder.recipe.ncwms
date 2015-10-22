@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 
-"""Recipe ncwms"""
+"""
+Recipe ncwms
+
+http://reading-escience-centre.github.io/edal-java/ncWMS_user_guide.html
+"""
 
 import os
 from mako.template import Template
