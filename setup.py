@@ -5,7 +5,7 @@ This module contains the tool of birdhousebuilder.recipe.ncwms
 from setuptools import find_packages
 from setuptools import setup
 
-version = '0.1.1'
+version = '0.1.2'
 description = 'A Buildout recipe to install and configure ncWMS2 server with Anaconda.'
 long_description = (
     open('README.rst').read() + '\n' +
@@ -38,6 +38,7 @@ setup(name='birdhousebuilder.recipe.ncwms',
       ],
       keywords='buildout recipe wms ncwms tomcat birdhouse conda anaconda',
       author='Birdhouse',
+      email='',
       url='https://github.com/bird-house/birdhousebuilder.recipe.ncwms',
       license='BSD',
       packages=find_packages(exclude=['ez_setup']),

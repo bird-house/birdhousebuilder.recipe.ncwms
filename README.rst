@@ -37,7 +37,7 @@ Supported options
 
 This recipe supports the following options:
 
-``anaconda-home``
+**anaconda-home**
    Buildout option with the root folder of the Anaconda installation. Default: ``$HOME/anaconda``.
    The default location can also be set with the environment variable ``ANACONDA_HOME``. Example::
 
@@ -49,14 +49,26 @@ This recipe supports the following options:
    2. ``$ANACONDA_HOME``
    3. ``$HOME/anaconda``
 
-``data_root``
+**data_dir**
   Root Path of data files (NetCDF) for ncWMS2. Default: ``~/.conda/envs/birdhouse/var/lib/pywps/output``
 
-``organization``
-  The name of your organization. Default: Birdhouse
+**title**
+  Title for this Web Map Service. Default: Birdhouse ncWMS2 Server
 
-``url``
-  The URL of your organization. Default: http://bird-house.github.io/
+**abstract**
+  More details about this Web Map Service. Default: ncWMS2 Web Map Service used in Birdhouse  
+
+**contact**
+  Name of server administrator. Default: Birdhouse Admin
+
+**organization**
+  Organization of server administrator. Default: Birdhouse
+
+**url**
+  Web site of the service provider. Default: http://bird-house.github.io/
+
+**enablecache**
+  Enable WMS caching: Default: false
 
 Example usage
 =============
