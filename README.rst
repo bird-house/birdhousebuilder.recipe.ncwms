@@ -11,7 +11,7 @@ birdhousebuilder.recipe.ncwms
 Introduction
 ************
 
-``birdhousebuilder.recipe.ncwms`` is a `Buildout < http://buildout.org/>`_ recipe to install and configure `ncWMS <http://reading-escience-centre.github.io/edal-java/ncWMS_user_guide.html>`_ server with `Anaconda <http://www.continuum.io/>`_.
+``birdhousebuilder.recipe.ncwms`` is a `Buildout <http://buildout.org/>`_ recipe to install and configure `ncWMS <http://reading-escience-centre.github.io/edal-java/ncWMS_user_guide.html>`_ server with `Anaconda <http://www.continuum.io/>`_.
 This recipe is used by the `Birdhouse <http://bird-house.github.io/>`_ project. 
 
 
@@ -70,7 +70,7 @@ Example usage
 
 The following example ``buildout.cfg`` installs ncWMS2 with Anaconda and default options:
 
-..code-block:: ini 
+.. code-block:: ini 
 
   [buildout]
   parts = ncwms
