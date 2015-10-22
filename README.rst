@@ -44,7 +44,7 @@ This recipe supports the following options:
    3. ``$HOME/anaconda``
 
 **data_dir**
-  Root Path of data files (NetCDF) for ncWMS2 (sed in dynamic service ``outputs``). 
+  Root Path of data files (NetCDF) for ncWMS2 (used in dynamic service ``outputs``). 
   Default: ``~/.conda/envs/birdhouse/var/lib/pywps/outputs``
 
 **title**
