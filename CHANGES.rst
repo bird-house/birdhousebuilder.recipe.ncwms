@@ -6,6 +6,7 @@ Changes
 
 * added tomcat installation.
 * using ncWMS2 2.0.4
+* added empty datasets tag in config.xml template.
 
 0.1.2 (2015-10-22)
 ==================
