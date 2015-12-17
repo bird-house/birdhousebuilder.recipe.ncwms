@@ -65,6 +65,15 @@ This recipe supports the following options:
 **enablecache**
   Enable WMS caching: Default: false
 
+To configure tomcat see the options in the `tomcat recipe <https://pypi.python.org/pypi/birdhousebuilder.recipe.tomcat>`_. For example:
+
+**http_port**
+    HTTP Port for Tomcat service. Default: 8080
+
+**ncwms_password**
+    Enable ncWMS2 admin web interface by setting a password: Default: disabled
+
+
 Example usage
 =============
 
@@ -80,6 +89,7 @@ The following example ``buildout.cfg`` installs ncWMS2 with Anaconda and default
   [ncwms]
   recipe = birdhousebuilder.recipe.ncwms
   organization = Birdhouse
+  http_port = 8080
 
 An example ``GetCapabilities`` URL to access for an output NetCDF file in outputs (using DATASET param)::
 
