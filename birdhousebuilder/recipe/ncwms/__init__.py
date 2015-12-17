@@ -17,7 +17,7 @@ wms_config = Template(filename=os.path.join(os.path.dirname(__file__), "config.x
 
 class Recipe(object):
     """This recipe is used by zc.buildout.
-    It installs ncWMS2 with conda and setups WMS configuration."""
+    It installs ncWMS2/tomcat with conda and setups the WMS configuration."""
 
     def __init__(self, buildout, name, options):
         self.buildout, self.name, self.options = buildout, name, options
@@ -39,20 +39,30 @@ class Recipe(object):
         self.options['enablecache'] = self.options.get('enablecache', 'false')
         self.options['updateInterval'] = self.options.get('updateInterval', '1')
 
-    def install(self):
+    def install(self, update=False):
         installed = []
-        installed += list(self.install_conda())
+        installed += list(self.install_tomcat(update))
+        installed += list(self.install_conda(update))
         installed += list(self.install_config())
         installed += list(self.install_wms_config())
-        return tuple()
+        return installed
 
-    def install_conda(self):
+    def install_tomcat(self, update):
+        script = tomcat.Recipe(
+            self.buildout,
+            self.name,
+            self.options)
+        return script.install(update)
+
+    def install_conda(self, update):
         script = conda.Recipe(
             self.buildout,
             self.name,
             {'pkgs': 'ncwms2'})
-
-        return script.install()
+        if update:
+            return script.update()
+        else:
+            return script.install()
 
     def install_config(self):
         result = config.render(**self.options)
@@ -88,10 +98,7 @@ class Recipe(object):
         return [output]
 
     def update(self):
-        #self.install_conda()
-        self.install_config()
-        self.install_wms_config()
-        return tuple()
+        return self.install(update=True)
 
 def uninstall(name, options):
     pass
