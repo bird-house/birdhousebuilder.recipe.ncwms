@@ -22,8 +22,10 @@ class Recipe(object):
     def __init__(self, buildout, name, options):
         self.buildout, self.name, self.options = buildout, name, options
         b_options = buildout['buildout']
-        self.prefix = self.options.get('prefix', conda.prefix())
+        
+        self.prefix = b_options.get('birdhouse-home', "/opt/birdhouse")
         self.options['prefix'] = self.prefix
+        
         self.options['config_dir'] = self.options.get(
             'config_dir', os.path.join(tomcat.content_root(self.prefix), 'ncWMS2'))
         self.options['data_dir'] = self.options.get(
@@ -59,10 +61,7 @@ class Recipe(object):
             self.buildout,
             self.name,
             {'pkgs': 'ncwms2'})
-        if update:
-            return script.update()
-        else:
-            return script.install()
+        return script.install(update)
 
     def install_config(self):
         result = config.render(**self.options)
