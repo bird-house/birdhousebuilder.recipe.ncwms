@@ -25,6 +25,9 @@ class Recipe(object):
         
         self.prefix = b_options.get('birdhouse-home', "/opt/birdhouse")
         self.options['prefix'] = self.prefix
+
+        self.env_path = conda.conda_env_path(buildout, options)
+        self.options['env_path'] = self.env_path
         
         self.options['config_dir'] = self.options.get(
             'config_dir', os.path.join(tomcat.content_root(self.prefix), 'ncWMS2'))
@@ -67,9 +70,9 @@ class Recipe(object):
         result = config.render(**self.options)
 
         # make sure ncWMS2.war is unpacked
-        tomcat.unzip(self.prefix, 'ncWMS2.war')
+        tomcat.unzip(self.env_path, 'ncWMS2.war')
 
-        output = os.path.join(tomcat.tomcat_home(self.prefix), 'webapps', 'ncWMS2', 'WEB-INF', 'classes', 'config.properties')
+        output = os.path.join(tomcat.tomcat_home(self.env_path), 'webapps', 'ncWMS2', 'WEB-INF', 'classes', 'config.properties')
         conda.makedirs(os.path.dirname(output))
 
         try:
