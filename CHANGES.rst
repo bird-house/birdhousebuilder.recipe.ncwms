@@ -1,10 +1,10 @@
 Changes
 *******
 
-0.3.0 (2016-06-17)
+0.3.0 (2016-06-19)
 ==================
 
-* set install prefix from buildout option.
+* using zc.recipe.deployment.
 
 0.2.0 (2015-12-17)
 ==================
