@@ -7,6 +7,7 @@ http://reading-escience-centre.github.io/edal-java/ncWMS_user_guide.html
 """
 
 import os
+import logging
 from mako.template import Template
 
 import zc.buildout
@@ -14,6 +15,10 @@ from birdhousebuilder.recipe import conda, tomcat
 
 config = Template(filename=os.path.join(os.path.dirname(__file__), "config.properties"))
 wms_config = Template(filename=os.path.join(os.path.dirname(__file__), "config.xml"))
+
+def make_dirs(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
 
 class Recipe(object):
     """This recipe is used by zc.buildout.
@@ -23,11 +28,11 @@ class Recipe(object):
         self.buildout, self.name, self.options = buildout, name, options
         b_options = buildout['buildout']
 
-        deployment = self.deployment = options.get('deployment')
-        if deployment:
-            self.options['prefix'] = buildout[deployment].get('prefix')
-        else:
-            self.options['prefix'] = os.path.join(buildout['buildout']['parts-directory'], self.name)
+        self.name = options.get('name', name)
+        self.options['name'] = self.name
+
+        self.logger = logging.getLogger(self.name)
+
         self.prefix = self.options['prefix']
 
         self.env_path = conda.conda_env_path(buildout, options)
@@ -77,12 +82,7 @@ class Recipe(object):
         tomcat.unzip(self.env_path, 'ncWMS2.war')
 
         output = os.path.join(tomcat.tomcat_home(self.env_path), 'webapps', 'ncWMS2', 'WEB-INF', 'classes', 'config.properties')
-        conda.makedirs(os.path.dirname(output))
-
-        try:
-            os.remove(output)
-        except OSError:
-            pass
+        make_dirs(os.path.dirname(output))
 
         with open(output, 'wt') as fp:
             fp.write(result)
@@ -92,12 +92,7 @@ class Recipe(object):
         result = wms_config.render(**self.options)
 
         output = os.path.join(tomcat.content_root(self.prefix), 'ncWMS2', 'config.xml')
-        conda.makedirs(os.path.dirname(output))
-
-        try:
-            os.remove(output)
-        except OSError:
-            pass
+        make_dirs(os.path.dirname(output))
 
         with open(output, 'wt') as fp:
             fp.write(result)
