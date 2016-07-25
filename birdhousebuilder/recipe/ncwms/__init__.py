@@ -38,6 +38,9 @@ class Recipe(object):
         # tomcat
         self.options['pkgs'] = self.options.get('pkgs', 'apache-tomcat ncwms2')
         self.tomcat = birdhousebuilder.recipe.tomcat.Recipe(self.buildout, self.name, self.options)
+
+        # ncwms deployment
+        self.options['etc-directory'] = self.options['etc_directory'] = os.path.join(self.options['prefix'], 'etc', 'ncWMS2')
             
         # ncwms config options
         self.options['data_dir'] = self.options.get(
@@ -79,11 +82,10 @@ class Recipe(object):
 
     def install_wms_config(self):
         text = wms_config.render(**self.options)
-        #output = os.path.join(tomcat.content_root(self.prefix), 'ncWMS2', 'config.xml')
-        make_dirs(os.path.join(self.options['catalina-base'], 'conf', 'ncWMS2' ), self.options['etc-user'], mode=0o755)
+        make_dirs(self.options['etc-directory'], self.options['etc-user'], mode=0o755)
         config = Configuration(self.buildout, 'config.xml', {
             'deployment': self.tomcat.deployment_name,
-            'directory': os.path.join(self.options['catalina-base'], 'conf', 'ncWMS2' ),
+            'directory': self.options['etc-directory'],
             'text': text})
         return [config.install()]
 
