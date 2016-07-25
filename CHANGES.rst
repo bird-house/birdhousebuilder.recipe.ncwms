@@ -1,10 +1,12 @@
 Changes
 *******
 
-0.3.0 (2016-06-19)
+0.3.0 (2016-07-25)
 ==================
 
 * using zc.recipe.deployment.
+* updated doctests.
+* updated travis.
 
 0.2.0 (2015-12-17)
 ==================
