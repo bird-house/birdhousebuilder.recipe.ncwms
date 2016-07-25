@@ -8,6 +8,7 @@ http://reading-escience-centre.github.io/edal-java/ncWMS_user_guide.html
 
 import os
 import pwd
+import shutil
 import logging
 from mako.template import Template
 
@@ -39,8 +40,6 @@ class Recipe(object):
         self.tomcat = birdhousebuilder.recipe.tomcat.Recipe(self.buildout, self.name, self.options)
             
         # ncwms config options
-        #self.options['config_dir'] = self.options.get(
-        #    'config_dir', os.path.join(tomcat.content_root(self.prefix), 'ncWMS2'))
         self.options['data_dir'] = self.options.get(
             'data_dir', os.path.join(self.tomcat.prefix, 'var', 'lib', 'pywps', 'outputs'))
         self.options['contact'] = self.options.get('contact', 'Birdhouse Admin')
@@ -65,8 +64,11 @@ class Recipe(object):
         text = config_props.render(**self.options)
 
         # make sure ncWMS2.war is unpacked
+        deployed_path =  os.path.join(self.tomcat.options['catalina-base'], 'webapps', 'ncWMS2')
+        if os.path.exists(deployed_path):
+            shutil.rmtree(deployed_path)
         unzip(
-            os.path.join(self.tomcat.options['catalina-base']),
+            self.tomcat.options['catalina-base'],
             os.path.join(self.tomcat.options['catalina-home'], 'webapps', 'ncWMS2.war'))
 
         config = Configuration(self.buildout, 'config.properties', {
