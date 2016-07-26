@@ -19,7 +19,7 @@ import birdhousebuilder.recipe.conda
 import birdhousebuilder.recipe.tomcat
 from birdhousebuilder.recipe.tomcat import make_dirs, unzip
 
-config_props = Template(filename=os.path.join(os.path.dirname(__file__), "config.properties"))
+ncwms_xml = Template(filename=os.path.join(os.path.dirname(__file__), "ncWMS2.xml"))
 wms_config = Template(filename=os.path.join(os.path.dirname(__file__), "config.xml"))
 
 class Recipe(object):
@@ -36,7 +36,7 @@ class Recipe(object):
         self.logger = logging.getLogger(name)
 
         # tomcat
-        self.options['pkgs'] = self.options.get('pkgs', 'apache-tomcat ncwms2')
+        self.options['pkgs'] = self.options.get('pkgs', 'ncwms2=2.2.1')
         self.tomcat = birdhousebuilder.recipe.tomcat.Recipe(self.buildout, self.name, self.options)
 
         # ncwms deployment
@@ -59,24 +59,28 @@ class Recipe(object):
     def install(self, update=False):
         installed = []
         installed += list(self.tomcat.install(update))
+        installed += list(self.install_war())
         installed += list(self.install_config())
         installed += list(self.install_wms_config())
         return installed
 
+    def install_war(self):
+        # make sure ncWMS2.war gets updated and remove app
+        app_path =  os.path.join(self.tomcat.options['catalina-base'], 'webapps', 'ncWMS2')
+        if os.path.exists(app_path):
+            shutil.rmtree(app_path)
+        # copy war file
+        war_file = os.path.join(self.tomcat.options['catalina-base'], 'webapps', 'ncWMS2.war')
+        shutil.copy(
+            os.path.join(self.tomcat.options['catalina-home'], 'webapps', 'ncWMS2.war'),
+            war_file)
+        return [war_file]
+
     def install_config(self):
-        text = config_props.render(**self.options)
-
-        # make sure ncWMS2.war is unpacked
-        deployed_path =  os.path.join(self.tomcat.options['catalina-base'], 'webapps', 'ncWMS2')
-        if os.path.exists(deployed_path):
-            shutil.rmtree(deployed_path)
-        unzip(
-            self.tomcat.options['catalina-base'],
-            os.path.join(self.tomcat.options['catalina-home'], 'webapps', 'ncWMS2.war'))
-
-        config = Configuration(self.buildout, 'config.properties', {
+        text = ncwms_xml.render(**self.options)
+        config = Configuration(self.buildout, 'ncWMS2.xml', {
             'deployment': self.tomcat.deployment_name,
-            'directory': os.path.join(self.options['catalina-base'], 'webapps', 'ncWMS2', 'WEB-INF', 'classes' ),
+            'directory': os.path.join(self.options['catalina-base'], 'conf', 'Catalina', 'localhost' ),
             'text': text})
         return [config.install()]
 
