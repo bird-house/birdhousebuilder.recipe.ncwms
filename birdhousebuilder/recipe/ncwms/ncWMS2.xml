@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Context>
+    <Parameter name="configDir" value="${etc_directory}" override="false"/>
+    <Parameter name="paletteDirs" value="${etc_directory}/palettes" override="false"/>
+    <Parameter name="styleDirs" value="${etc_directory}/styles" override="false"/>
+    <Parameter name="defaultPalette" value="default" override="false"/>
+    <Parameter name="advertisedPalettes" value="default,x-Rainbow" override="false"/>
+</Context>
