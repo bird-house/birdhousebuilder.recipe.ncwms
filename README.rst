@@ -28,7 +28,7 @@ The recipe will install the ``ncWMS2`` and ``apache-tomcat`` package from a cond
 
 By default ``ncWMS2`` will be available on http://localhost:8080/ncWMS2.
 
-The configuration files of ``ncWMS2`` are in ``${prefix}/etc/ncWMS2``.
+The configuration files of ``ncWMS2`` are in ``${prefix}/var/lib/tomcat/conf/ncWMS2``.
 
 The recipe depends on ``birdhousebuilder.recipe.conda``, ``birdhousebuilder.recipe.supervisor`` and ``birdhousebuilder.recipe.tomcat``.
 
