@@ -19,6 +19,7 @@ import birdhousebuilder.recipe.conda
 import birdhousebuilder.recipe.tomcat
 from birdhousebuilder.recipe.tomcat import make_dirs, unzip
 
+config_props = Template(filename=os.path.join(os.path.dirname(__file__), "config.properties"))
 ncwms_xml = Template(filename=os.path.join(os.path.dirname(__file__), "ncWMS2.xml"))
 wms_config = Template(filename=os.path.join(os.path.dirname(__file__), "config.xml"))
 
@@ -36,7 +37,7 @@ class Recipe(object):
         self.logger = logging.getLogger(name)
 
         # tomcat
-        self.options['pkgs'] = self.options.get('pkgs', 'ncwms2=2.2.1')
+        self.options['pkgs'] = self.options.get('pkgs', 'ncwms2=2.0.4')
         self.tomcat = birdhousebuilder.recipe.tomcat.Recipe(self.buildout, self.name, self.options)
 
         # ncwms deployment
@@ -60,7 +61,8 @@ class Recipe(object):
         installed = []
         installed += list(self.tomcat.install(update))
         installed += list(self.install_war())
-        installed += list(self.install_config())
+        installed += list(self.install_config_properties()) # TODO: should be skipped with ncwms 2.2.x
+        installed += list(self.install_config_context())
         installed += list(self.install_wms_config())
         return installed
 
@@ -74,9 +76,28 @@ class Recipe(object):
         shutil.copy(
             os.path.join(self.tomcat.options['catalina-home'], 'webapps', 'ncWMS2.war'),
             war_file)
+        # make sure it is unpacked
+        # TODO: skip this with ncwms 2.2.x
+        unzip(
+            self.tomcat.options['catalina-base'],
+            war_file)
         return [war_file]
 
-    def install_config(self):
+    def install_config_properties(self):
+        """
+        used until ncWMS2 2.1.x
+        """
+        text = config_props.render(**self.options)
+        config = Configuration(self.buildout, 'config.properties', {
+            'deployment': self.tomcat.deployment_name,
+            'directory': os.path.join(self.options['catalina-base'], 'webapps', 'ncWMS2', 'WEB-INF', 'classes' ),
+            'text': text})
+        return [config.install()]
+
+    def install_config_context(self):
+        """
+        used since ncWMS2 2.2.0
+        """
         text = ncwms_xml.render(**self.options)
         config = Configuration(self.buildout, 'ncWMS2.xml', {
             'deployment': self.tomcat.deployment_name,
