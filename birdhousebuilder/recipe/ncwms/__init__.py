@@ -46,6 +46,8 @@ class Recipe(object):
         # ncwms config options
         self.options['data_dir'] = self.options.get(
             'data_dir', os.path.join(self.tomcat.prefix, 'var', 'lib', 'pywps', 'outputs'))
+        self.options['data2_dir'] = self.options.get(
+            'data2_dir', os.path.join(self.tomcat.prefix, 'var', 'lib', 'pywps', 'cache'))
         self.options['contact'] = self.options.get('contact', 'Birdhouse Admin')
         self.options['email'] = self.options.get('email', '')
         self.options['organization'] = self.options.get('organization', 'Birdhouse')

@@ -7,7 +7,7 @@ from setuptools import setup
 
 name = 'birdhousebuilder.recipe.ncwms'
 
-version = '0.3.1'
+version = '0.3.2'
 description = 'A Buildout recipe to install and configure ncWMS2 server with Anaconda.'
 long_description = (
     open('README.rst').read() + '\n' +
