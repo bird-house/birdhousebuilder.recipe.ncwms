@@ -16,7 +16,8 @@ This recipe is used by the `Birdhouse`_ project.
 .. _`Anaconda`: http://continuum.io/
 .. _`Supervisor`: http://supervisord.org/
 .. _`Birdhouse`: http://bird-house.github.io/
-.. _`ncWMS`: http://reading-escience-centre.github.io/edal-java/ncWMS_user_guide.html>
+.. _`ncWMS`: https://www.gitbook.com/book/reading-escience-centre/ncwms-user-guide/details
+
 
 Usage
 *****
