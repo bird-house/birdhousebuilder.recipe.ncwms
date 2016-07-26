@@ -72,16 +72,17 @@ class Recipe(object):
         if os.path.exists(app_path):
             shutil.rmtree(app_path)
         # copy war file
-        war_file = os.path.join(self.tomcat.options['catalina-base'], 'webapps', 'ncWMS2.war')
-        shutil.copy(
-            os.path.join(self.tomcat.options['catalina-home'], 'webapps', 'ncWMS2.war'),
-            war_file)
+        # TODO: does not work with < 2.2.x
+        #war_file = os.path.join(self.tomcat.options['catalina-base'], 'webapps', 'ncWMS2.war')
+        #shutil.copy(
+        #    os.path.join(self.tomcat.options['catalina-home'], 'webapps', 'ncWMS2.war'),
+        #    war_file)
         # make sure it is unpacked
         # TODO: skip this with ncwms 2.2.x
         unzip(
             self.tomcat.options['catalina-base'],
-            war_file)
-        return [war_file]
+            os.path.join(self.tomcat.options['catalina-home'], 'webapps', 'ncWMS2.war'))
+        return tuple()
 
     def install_config_properties(self):
         """
