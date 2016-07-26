@@ -3,7 +3,7 @@
   <datasets/>
   <cache enabled="${enablecache}">
     <inMemorySizeMB>256</inMemorySizeMB>
-    <elementLifetimeMinutes>10.0</elementLifetimeMinutes>
+    <elementLifetimeMinutes>0.0</elementLifetimeMinutes>
   </cache>
   <dynamicServices>
     <dynamicService alias="outputs" servicePath="${data_dir}" datasetIdMatch=".*" dataReaderClass="" copyrightStatement="" moreInfoUrl="" disabled="false" queryable="true" downloadable="false"/>
@@ -25,3 +25,5 @@
     <allowglobalcapabilities>${allowglobalcapabilities}</allowglobalcapabilities>
   </server>
 </config>
+
+
