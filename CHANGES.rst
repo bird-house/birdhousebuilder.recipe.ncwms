@@ -1,6 +1,12 @@
 Changes
 *******
 
+0.3.1 (2016-07-26)
+==================
+
+* prepared for ncWMS 2.2.x.
+* config files are now in var/lib/tomcat/conf/ncWMS2.
+
 0.3.0 (2016-07-25)
 ==================
 
