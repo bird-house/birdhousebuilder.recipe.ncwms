@@ -2,12 +2,13 @@
 <config>
   <datasets/>
   <cache enabled="${enablecache}">
-    <inMemorySizeMB>256</inMemorySizeMB>
-    <elementLifetimeMinutes>0.0</elementLifetimeMinutes>
+    <inMemorySizeMB>${inMemorySizeMB}</inMemorySizeMB>
+    <elementLifetimeMinutes>${elementLifetimeMinutes}</elementLifetimeMinutes>
   </cache>
   <dynamicServices>
-    <dynamicService alias="outputs" servicePath="${data_dir}" datasetIdMatch=".*" dataReaderClass="" copyrightStatement="" moreInfoUrl="" disabled="false" queryable="true" downloadable="false"/>
-    <dynamicService alias="cache" servicePath="${data2_dir}" datasetIdMatch=".*" dataReaderClass="" copyrightStatement="" moreInfoUrl="" disabled="false" queryable="true" downloadable="false"/>
+% for dynamic_service in dynamic_services:
+    <dynamicService alias="${dynamic_service[0]}" servicePath="${dynamic_service[1]}" datasetIdMatch=".*" dataReaderClass="" copyrightStatement="" moreInfoUrl="" disabled="false" queryable="true" downloadable="true"/>
+% endfor
   </dynamicServices>
   <contact>
     <name>${contact}</name>
