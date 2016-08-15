@@ -40,9 +40,10 @@ This recipe supports the following options:
 **anaconda-home**
   Buildout option pointing to the root folder of the Anaconda installation. Default: ``$HOME/anaconda``.
 
-**data_dir**
-  Root Path of data files (NetCDF) for ncWMS2 (used in dynamic service ``outputs``). 
-  Default: ``${prefix}/var/lib/pywps/outputs``
+**dynamic_services**
+  List of dynamic service configurations with name and root path to data files. Dynamic service configurations 
+  are seperated by space or newlines. Service name and path is seperated by ``=``.
+  Default: ``outputs=${prefix}/var/lib/pywps/outputs``
 
 **title**
   Title for this Web Map Service. Default: Birdhouse ncWMS2 Server
@@ -59,8 +60,16 @@ This recipe supports the following options:
 **url**
   Web site of the service provider. Default: http://bird-house.github.io/
 
+Cache options:
+
 **enablecache**
-  Enable WMS caching: Default: false
+  Enable WMS caching: Default: true
+
+**inMemorySizeMB**
+  Size in MB of in-memory cache. Default: 256
+
+**elementLifetimeMinutes**
+  Life-time of cache elements. Default: 0.0 (unlimited)
 
 To configure tomcat see the options in the `tomcat recipe <https://pypi.python.org/pypi/birdhousebuilder.recipe.tomcat>`_. For example:
 

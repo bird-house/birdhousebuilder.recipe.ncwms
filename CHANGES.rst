@@ -1,6 +1,13 @@
 Changes
 *******
 
+0.4.0 (2016-08-15)
+==================
+
+* disable support for ncWMS <2.2.x.
+* replaced ``data_dir`` options by ``dynamic_services`` option.
+* added ``inMemorySizeMB`` and ``elementLifetimeMinutes``.
+
 0.3.2 (2016-07-27)
 ==================
 
