@@ -81,6 +81,13 @@ class Recipe(object):
         self.options['enablecache'] = self.options.get('enablecache', 'true')
         self.options['updateInterval'] = self.options.get('updateInterval', '1')
 
+        # make folders
+        make_dirs(self.options['ncwms-home'], self.options['user'], mode=0o755)
+        make_dirs(os.path.join(self.options['ncwms-home'], '.h2' ), self.options['user'], mode=0o755)
+        make_dirs(os.path.join(self.options['ncwms-home'], 'logs' ), self.options['user'], mode=0o755)
+        make_dirs(os.path.join(self.options['ncwms-home'], 'styles' ), self.options['user'], mode=0o755)
+        make_dirs(os.path.join(self.options['ncwms-home'], 'palettes' ), self.options['user'], mode=0o755)
+
     def install(self, update=False):
         installed = []
         installed += list(self.tomcat.install(update))
@@ -132,7 +139,6 @@ class Recipe(object):
 
     def install_wms_config(self):
         text = config_xml.render(dynamic_services=self.dynamic_services, **self.options)
-        make_dirs(self.options['ncwms-home'], self.options['user'], mode=0o755)
         config = Configuration(self.buildout, 'config.xml', {
             'deployment': self.tomcat.deployment_name,
             'directory': self.options['ncwms-home'],
