@@ -1,6 +1,12 @@
 Changes
 *******
 
+0.4.1 (2016-08-19)
+==================
+
+* create .h2 dir with run-user permissions.
+* update conda package ncwms2=2.2.2
+
 0.4.0 (2016-08-15)
 ==================
 
