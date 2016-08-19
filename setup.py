@@ -7,7 +7,7 @@ from setuptools import setup
 
 name = 'birdhousebuilder.recipe.ncwms'
 
-version = '0.4.0'
+version = '0.4.1'
 description = 'A Buildout recipe to install and configure ncWMS2 server with Anaconda.'
 long_description = (
     open('README.rst').read() + '\n' +
@@ -45,7 +45,7 @@ setup(name=name,
       ],
       keywords='buildout recipe wms ncwms tomcat birdhouse conda anaconda',
       author='Birdhouse',
-      author_email='wps-dev at dkrz.de',
+      author_email='wps-dev@dkrz.de',
       url='https://github.com/bird-house/birdhousebuilder.recipe.ncwms',
       license='Apache License 2',
       install_requires = reqs,
