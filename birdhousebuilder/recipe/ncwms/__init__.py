@@ -55,7 +55,7 @@ class Recipe(object):
         self.logger = logging.getLogger(name)
 
         # tomcat
-        self.options['pkgs'] = self.options.get('pkgs', 'ncwms2=2.0.4')
+        self.options['pkgs'] = self.options.get('pkgs', 'ncwms2=2.2.2')
         self.tomcat = birdhousebuilder.recipe.tomcat.Recipe(self.buildout, self.name, self.options)
 
         # ncwms home with configs
