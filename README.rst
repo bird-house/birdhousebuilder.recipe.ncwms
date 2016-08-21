@@ -40,7 +40,7 @@ This recipe supports the following options:
 **anaconda-home**
   Buildout option pointing to the root folder of the Anaconda installation. Default: ``$HOME/anaconda``.
 
-**dynamic_services**
+**dynamic-services**
   List of dynamic service configurations with name and root path to data files. Dynamic service configurations 
   are seperated by space or newlines. Service name and path is seperated by ``=``.
   Default: ``outputs=${prefix}/var/lib/pywps/outputs``
